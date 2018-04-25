@@ -1,0 +1,59 @@
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="./path-to-regexp.js"></script>
+
+<div id="app"></div>
+
+<script>
+
+const Foo = {
+  props: ['id'],
+  template: `<div>foo with id: {{ id }}</div>`
+}
+const Bar = { template: `<div>bar</div>` }
+const NotFound = { template: `<div>not found!</div>` }
+
+const routeTable = {
+  'foo/:id': Foo,
+  'bar': Bar,
+}
+
+window.addEventListener('hashchange', () => {
+  app.url = window.location.hash.slice(1);
+})
+
+const compiledRoteTable = {};
+
+Object.keys(routeTable).forEach(key => {
+  const dynanic = [];
+  const regex = pathToRegexp(key, dynanic);
+  const component = routeTable[path];
+})
+
+const keys = [];
+const regex = pathToRegexp('foo/:id', keys);
+
+const app = new Vue({
+  el: '#app',
+  data: {
+    url: window.location.hash.slice(1)
+  },
+  render (h) {
+    const path = '/' + this.url
+  
+    const result = regex.exec(path);
+
+    let componentToRender = routeTable[this.url.split('/')[0]]
+    let props = {
+      id: 2
+    }
+
+    return h('div', [
+      h(componentToRender, { props }),
+      h('a', { attrs: { href: '#foo/123' }}, 'foo'),
+      h('a', { attrs: { href: '#foo/234' }}, 'foo'),
+      ' | ',
+      h('a', { attrs: { href: '#bar' }}, 'bar')
+    ])
+  }
+})
+</script>

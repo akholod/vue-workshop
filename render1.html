@@ -1,0 +1,21 @@
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+<div id="app">
+  <example :tags="['h1', 'h2', 'h3', 'h4']"></example>
+</div>
+
+<script>
+  Vue.component('example', {
+    props: {
+      tags: {
+        type: Array,
+        default: [],
+      }
+    },
+    render(h) {
+      return h('div', this.tags.map((tag, i) => h(tag, i)))
+    }
+  })
+
+  new Vue({el :'#app'})
+</script>

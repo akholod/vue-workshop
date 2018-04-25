@@ -1,0 +1,29 @@
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+<div id="app">
+  <example :ok="1"></example>
+</div>
+
+<script>
+  const Foo = Vue.component('foo', {
+    render(h) {
+      return h('div', 'foo component');
+    }
+  })
+  const Bar = Vue.component('bar', {
+    render(h) {
+      return h('div', 'bar component');
+    }
+  })
+
+  Vue.component('example', {
+    props: ['ok'],
+    functional: true,
+    render(h, context) {
+      const comp = (context.props.ok) ? 'foo' : 'bar';
+      return h(comp);
+    }
+  })
+
+  new Vue({el :'#app'})
+</script>
